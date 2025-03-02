@@ -1,0 +1,37 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+header{
+    background-color: rgb(9, 107, 132);
+}
+body{
+    background-color: rgb(74, 180, 233);
+}
+.full button{
+    width: 50%;
+    font-weight: 600;
+}
+a{
+    text-decoration: none;
+    font-weight: 500;
+}
+.massage{
+    color: red;
+    text-align: center;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+@media (max-width:575px){
+    header h2{
+        font-size: 1.2rem;
+    }
+    button{
+        font-size: 0.8rem !important;
+    }
+    footer p{
+        font-size: 0.8rem !important;
+    }
+}

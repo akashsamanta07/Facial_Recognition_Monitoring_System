@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container-fluid s_dash_content-container">
+    <div class="container mt-5">
+        <div class="row flex-direction-coiumn justify-content-center full">
+            <div class="text-center mb-3">
+                <a href="{% url 'student_login' %}"><button type="button" class="btn btn-primary btn-block shadow-lg">Login as Student</button></a>
+            </div>
+            <div class="text-center mb-3">
+                <a href="{% url 'teacher_login' %}"><button type="button" class="btn btn-success btn-block shadow-lg">Login as Teacher</button></a>
+            </div>
+            <div class="text-center mb-3">
+                <a href="{% url 'admin_login' %}"><button type="button" class="btn btn-danger btn-block shadow-lg">Login as Admin</button></a>
+            </div>
+        </div>
+   </div>
+</div>
+
+{% endblock %}
+

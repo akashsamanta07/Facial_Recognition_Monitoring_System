@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container mt-2">
+    <div class="s_dash_top-bar">
+        <button class="btn btn-warning me-2 s_dash_btn">Change Pass</button>
+        <a href="{% url 'student_logout' %}" class="log"><button class="btn btn-danger s_dash_btn">Log Out</button></a>
+    </div>
+    <div class="s_dash_content-container text-center">
+        <h3 class="s_dash_heading">Welcome, <span id="userName">{{username}}</span></h3>
+        <div class="container-fluid">
+            <div class="container mt-5">
+                <div class="row flex-direction-coiumn justify-content-center full">
+                    <div class="text-center mb-3">
+                        <a href=""><button type="button" class="btn btn-primary btn-block shadow-lg">Check Attendance</button></a>
+                    </div>
+                    <div class="text-center mb-3">
+                        <a href=""><button type="button" class="btn btn-success btn-block shadow-lg">Check CA Marks</button></a>
+                    </div>
+                    <div class="text-center mb-3">
+                        <a href=""><button type="button" class="btn btn-danger btn-block shadow-lg">Check PCA Marks</button></a>
+                    </div>
+                </div>
+           </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

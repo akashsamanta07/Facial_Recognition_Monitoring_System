@@ -1,0 +1,35 @@
+
+.s_dash_top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.s_dash_content-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 15px;
+}
+.s_dash_heading {
+    font-size: 1.5rem;
+    font-weight: 650;
+}
+.s_dash_btn {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+@media (max-width: 576px) {
+    .s_dash_content-container {
+        padding: 25px;
+    }
+    .s_dash_heading {
+        font-size: 1.3rem;
+    }
+    .s_dash_btn {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+
+}
