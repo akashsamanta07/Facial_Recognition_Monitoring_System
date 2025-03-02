@@ -29,8 +29,4 @@ urlpatterns = [
     path('admin-dashboard/',views.admin_dashboard,name="admin_dashboard"),
     path('teacher-dashboard/',views.teacher_dashboard,name="teacher_dashboard"),
     path('student-dashboard/',views.student_dashboard,name="student_dashboard"),
-    path('teacher-logout/',views.teacher_logout,name="teacher_logout"),
-    path('student-logout/',views.student_logout,name="student_logout"),
-    path('admin-logout/',views.admin_logout,name="admin_logout"),
-    
 ]

@@ -92,11 +92,3 @@ def student_dashboard(request):
     return render(request,"student-dashboard.html",{"username":user})
 
 
-def admin_logout(request):
-    return redirect('/admin-login/')
-
-def teacher_logout(request):
-    return redirect('/teacher-login/')
-
-def student_logout(request):
-    return redirect('/student-login/')
