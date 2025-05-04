@@ -6,7 +6,10 @@
 <div class="container mt-2">
     <div class="s_dash_top-bar">
         <button class="btn btn-warning me-2 s_dash_btn">Change Pass</button>
-        <a class="log" onclick="history.replaceState(null,null,'/');window.location.href='/';"><button class="btn btn-danger s_dash_btn">Log Out</button></a>
+        <button class="btn btn-danger s_dash_btn log" onclick="history.replaceState(null, null, '/'); window.location.href='/'">
+            Log Out
+          </button>
+          
     </div>
     
     <div class="s_dash_content-container text-center">
@@ -14,6 +17,9 @@
         <div class="container-fluid">
             <div class="container mt-5">
                 <div class="row flex-direction-coiumn justify-content-center full">
+                    <div class="text-center mb-3">
+                        <a href=""><button type="button" class="btn btn-danger btn-block shadow-lg">Add Student</button></a>
+                    </div>
                     <div class="text-center mb-3">
                         <a href=""><button type="button" class="btn btn-primary btn-block shadow-lg">Take Attendance</button></a>
                     </div>
