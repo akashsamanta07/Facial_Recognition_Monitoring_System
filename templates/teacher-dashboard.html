@@ -5,32 +5,22 @@
 
 <div class="container mt-2">
     <div class="s_dash_top-bar">
-        <button class="btn btn-warning me-2 s_dash_btn">Change Pass</button>
-        <button class="btn btn-danger s_dash_btn log" onclick="history.replaceState(null, null, '/'); window.location.href='/'">
-            Log Out
-          </button>
-          
+        <button class="btn btn-warning me-2 s_dash_btn" data-bs-toggle="modal" data-bs-target="#changepass">Change Pass</button>
+        <a href="{% url 'logout' %}"><button class="btn btn-danger s_dash_btn log">logout</button></a>
     </div>
-    
     <div class="s_dash_content-container text-center">
         <h3 class="s_dash_heading">Welcome, <span id="userName">{{username}}</span></h3>
         <div class="container-fluid">
             <div class="container mt-5">
                 <div class="row flex-direction-coiumn justify-content-center full">
                     <div class="text-center mb-3">
-                        <a href=""><button type="button" class="btn btn-danger btn-block shadow-lg">Add Student</button></a>
+                        <button type="button" class="btn btn-primary btn-block shadow-lg" data-bs-toggle="modal" data-bs-target="#modeladd2">Add Student</button>
                     </div>
                     <div class="text-center mb-3">
-                        <a href=""><button type="button" class="btn btn-primary btn-block shadow-lg">Take Attendance</button></a>
+                        <a href=""><button type="button" class="btn btn-success btn-block shadow-lg">Check Attendance</button></a>
                     </div>
                     <div class="text-center mb-3">
-                        <a href=""><button type="button" class="btn btn-success btn-block shadow-lg">Check/Edit Attendance</button></a>
-                    </div>
-                    <div class="text-center mb-3">
-                        <a href=""><button type="button" class="btn btn-primary btn-block shadow-lg">Check CA1 Marks</button></a>
-                    </div>
-                    <div class="text-center mb-3">
-                        <a href=""><button type="button" class="btn btn-danger btn-block shadow-lg">Check PCA Marks</button></a>
+                        <a href=""><button type="button" class="btn btn-danger btn-block shadow-lg">Take Attendance</button></a>
                     </div>
                 </div>
            </div>
@@ -38,4 +28,143 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="modeladd2">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="excelFile" class="form-label">Upload Excel File</label>
+                    <input type="file" class="form-control" id="excelFile" name="excelFile" accept=".xlsx,.xls">
+                  </div>
+                  <h6 class="text-center">Manual Add</h6>
+                 <!-- ID -->
+                    <div class="mb-3">
+                        <label for="userId" class="form-label">ROLL NO</label>
+                        <input type="text" class="form-control" id="userId" name="userId">
+                    </div>
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+
+                  
+                    <div class="mb-3">
+                        <label for="department" class="form-label">Department</label>
+                        <select class="form-control" id="department" name="department">
+                            <option value="" disabled selected>Select department</option>
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EEE">EE</option>
+                            <option value="ME">ME</option>
+                            <option value="CE">CE</option>
+                        </select>
+                    </div>
+                    
+
+                    <!-- Subject -->
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject">
+                    </div>
+
+                    <!-- Semester -->
+                    <div class="mb-3">
+                        <label for="semester" class="form-label">Semester</label>
+                        <select class="form-select" id="semester" name="semester">
+                        <option value="">Select Semester</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        </select>
+                    </div>
+                    <!-- Year (Free numeric input) -->
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Year</label>
+                        <input type="number" class="form-control" id="year" name="year" min="2025" max="2100" placeholder="e.g. 2025">
+                    </div>
+  
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#message" id="openModal" name="action" value="add">Save changes</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="message1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          {{message}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="changepass" tabindex="-1" role="dialog" aria-labelledby="changepassLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="changepassLabel">Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label for="old_password" class="form-label">Old Password</label>
+              <input type="password" name="old_password" id="old_password" class="form-control" required>
+            </div>
+  
+            <div class="mb-3">
+              <label for="new_password" class="form-label">New Password</label>
+              <input type="password" name="new_password" id="new_password" class="form-control" required>
+            </div>
+  
+            <div class="mb-3">
+              <label for="confirm_password" class="form-label">Confirm New Password</label>
+              <input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
+            </div>
+  
+            <input type="hidden" name="action" value="pass">
+  
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Change Password</button>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var myModal = new bootstrap.Modal(document.getElementById('message1'));
+      myModal.show();
+    });
+  </script>
 {% endblock %}
