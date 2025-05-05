@@ -5,10 +5,8 @@
 
 <div class="container mt-2">
     <div class="s_dash_top-bar">
-        <button class="btn btn-warning me-2 s_dash_btn">Change Pass</button>
-        <button class="btn btn-danger s_dash_btn log" onclick="history.replaceState(null, null, '/'); window.location.href='/'">
-            Log Out
-          </button>
+        <button class="btn btn-warning me-2 s_dash_btn" data-bs-toggle="modal" data-bs-target="#changepass9">Change Pass</button>
+        <a href="{% url 'logout' %}"><button class="btn btn-danger s_dash_btn log">logout</button> </a>
           
     </div>
     <div class="s_dash_content-container text-center">
@@ -30,5 +28,68 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="message9">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          {{message}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="modal fade" id="changepass9" tabindex="-1" role="dialog" aria-labelledby="changepassLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="changepassLabel">Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body">
+          <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label for="old_password" class="form-label">Old Password</label>
+              <input type="password" name="old_password" id="old_password" class="form-control" required>
+            </div>
+  
+            <div class="mb-3">
+              <label for="new_password" class="form-label">New Password</label>
+              <input type="password" name="new_password" id="new_password" class="form-control" required>
+            </div>
+  
+            <div class="mb-3">
+              <label for="confirm_password" class="form-label">Confirm New Password</label>
+              <input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
+            </div>
+  
+            <input type="hidden" name="action" value="pass">
+  
+            <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">Change Password</button>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var myModal = new bootstrap.Modal(document.getElementById('message9'));
+      myModal.show();
+    });
+  </script>
+
 
 {% endblock %}
