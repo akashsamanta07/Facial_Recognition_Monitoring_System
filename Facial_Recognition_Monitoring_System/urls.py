@@ -29,5 +29,8 @@ urlpatterns = [
     path('admin-dashboard/',views.admin_dashboard,name="admin_dashboard"),
     path('teacher-dashboard/',views.teacher_dashboard,name="teacher_dashboard"),
     path('student-dashboard/',views.student_dashboard,name="student_dashboard"),
+    path('teacher-forget/',views.teacher_forget,name="teacher_forget"),
+    path('admin-forget/',views.admin_forget,name="admin_forget"),
+    path('student-forget/',views.student_forget,name="student_forget"),
     path('logout/',views.logout,name="logout")
 ]

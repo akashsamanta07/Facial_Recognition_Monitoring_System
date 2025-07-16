@@ -18,7 +18,6 @@ a{
     font-weight: 500;
 }
 
-
 @media (max-width:575px){
     header h2{
         font-size: 1.2rem;

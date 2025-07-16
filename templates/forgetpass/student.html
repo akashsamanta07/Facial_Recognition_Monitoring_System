@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="m-5">
+{% if data == 'Invalid id' or data == '' %}
+    <p class="massage" style="color: red;
+    text-align: center;
+    font-weight: 700;
+    margin-top: 10px;">{{data}}</p>
+    <form method="POST" action="" class="w-50 mx-auto border p-4 shadow mt-5">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="user_id" class="form-label title_1">Username</label>
+      <input type="text" class="form-control" id="user_id" name="user_id" required>
+    </div>
+    <input type="hidden" name="action" value="id">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% else %}
+  <div class="w-50 mx-auto border p-4 shadow">
+    <h4>Send password on your email {{data}}</h4>
+    <div class="mb-3">
+      <a href="{% url 'student_login' %}"><button class="btn btn-danger s_dash_btn log">Login</button> </a>
+  </div>
+{% endif %}
+</div>
+{% endblock %}
