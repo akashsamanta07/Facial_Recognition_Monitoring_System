@@ -32,5 +32,7 @@ urlpatterns = [
     path('teacher-forget/',views.teacher_forget,name="teacher_forget"),
     path('admin-forget/',views.admin_forget,name="admin_forget"),
     path('student-forget/',views.student_forget,name="student_forget"),
-    path('logout/',views.logout,name="logout")
+    path('logout/',views.logout,name="logout"),
+    path('update-teacher/',views.update_teacher,name="update_teacher"),
+    path('update-student/',views.update_student,name="update_student"),
 ]

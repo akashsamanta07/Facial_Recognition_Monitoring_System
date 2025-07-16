@@ -13,9 +13,14 @@
         <div class="container-fluid">
             <div class="container mt-5">
                 <div class="row flex-direction-coiumn justify-content-center full">
-                    <div class="text-center mb-3">
-                        <button type="button" class="btn btn-primary btn-block shadow-lg" data-bs-toggle="modal" data-bs-target="#modeladd2">Add Student</button>
+                  <div class="text-center mb-3">
+                    <div class="edit-t">
+                      <button type="button" class="btn btn-primary btn-block shadow-lg edit-teacher" data-bs-toggle="modal" data-bs-target="#modeladd2">Add Student</button>
+                      <a href="{% url 'update_student' %}" class="edit-teacher">
+                          <button type="button" class="btn btn-info btn-block shadow-lg edit-teacher">Edit Student Details</button>
+                      </a>
                     </div>
+                  </div>
                     <div class="text-center mb-3">
                         <a href=""><button type="button" class="btn btn-success btn-block shadow-lg">Check Attendance</button></a>
                     </div>

@@ -95,6 +95,7 @@ def admin_dashboard(request):
     if 'user_id' not in request.session:
         return redirect("index")
     username=request.session.get('username')
+    request.session['user_id']=request.session.get('user_id')
     message=datetime.now()
     if request.method == 'POST':
         if request.POST.get("action") == "add":
@@ -208,6 +209,7 @@ def teacher_dashboard(request):
     if 'user_id' not in request.session:
         return redirect("index")
     username=request.session.get('username')
+    request.session['user_id']=request.session.get('user_id')
     message=datetime.now()
     if request.method == 'POST':
         if request.POST.get("action") == "add":
@@ -432,5 +434,143 @@ def admin_forget(request):
             except:
                 pass
     return render(request,"forgetpass/admin.html",data)
+
+
+
+def update_teacher(request):
+    data={
+        "data":'',
+    }
+    table="table_"+str(request.session.get('user_id'))
+    if request.method == 'POST':
+        if request.POST.get("action") == "id":
+            try:
+                teacher_id = request.POST.get('user_id') 
+                data["data"]="Not Found" 
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        f"""
+                        SELECT id, name, email, department, subject, semester, year
+                        FROM {table}
+                        WHERE id = %s
+                        """,
+                        [teacher_id],
+                    )
+                    row = cursor.fetchone()
+                    if len(row) > 0:
+                        data["id"] = row[0]
+                        data["name"] = row[1]
+                        data["email"] = row[2]
+                        data["department"] = row[3]
+                        data["subject"] = row[4]
+                        data["semester"] = row[5]
+                        data["year"] = row[6]
+                        data["data"] = "Found"
+            except:
+                pass
+        if request.POST.get("action") == "update":
+            try:
+                teacher_id = request.POST.get('userId')
+                name = request.POST.get('name')
+                email = request.POST.get('email')
+                department = request.POST.get('department')
+                subject = request.POST.get('subject')
+                semester = request.POST.get('semester')
+                year = request.POST.get('year')
+                if teacher_id and name and email and department and subject and semester and year:
+                    with connection.cursor() as cursor:
+                        cursor.execute(
+                            f'''UPDATE `{table}` 
+                                SET name=%s, email=%s, department=%s, subject=%s, semester=%s, year=%s
+                                WHERE id=%s;''',
+                            [name, email, department, subject, semester, year, teacher_id]
+                        )
+                    data["data"] = "Update Successful"
+                    print(table)
+                else:
+                    data["data"] = "Invalid data for update"
+            except:
+                pass
+            
+        if request.POST.get("action") == "delete":
+            try:
+                teacher_id = request.POST.get('userId')
+                if teacher_id:
+                    with connection.cursor() as cursor:
+                        cursor.execute(
+                            f"DELETE FROM `{table}` WHERE id = %s", [teacher_id]
+                        )
+                    data["data"] = "Delete Successful"
+                else:
+                    data["data"] = "No ID provided for deletion"
+            except:
+                pass
+    return render(request,'edit_details/teacher.html',data)
+
+
+def update_student(request):
+    data={
+        "data":'',
+    }
+    table="table_"+str(request.session.get('user_id'))
+    if request.method == 'POST':
+        if request.POST.get("action") == "id":
+            try:
+                student_id = request.POST.get('user_id') 
+                data["data"]="Not Found" 
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        f"""
+                        SELECT id, name, email, department, subject, semester, year
+                        FROM {table}
+                        WHERE id = %s
+                        """,
+                        [student_id],
+                    )
+                    row = cursor.fetchone()
+                    if len(row) > 0:
+                        data["id"] = row[0]
+                        data["name"] = row[1]
+                        data["email"] = row[2]
+                        data["department"] = row[3]
+                        data["subject"] = row[4]
+                        data["semester"] = row[5]
+                        data["year"] = row[6]
+                        data["data"] = "Found"
+            except:
+                pass
+        if request.POST.get("action") == "update":
+            student_id = request.POST.get('userId')
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+            department = request.POST.get('department')
+            subject = request.POST.get('subject')
+            semester = request.POST.get('semester')
+            year = request.POST.get('year')
+            if student_id and name and email and department and subject and semester and year:
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        f"""
+                        UPDATE {table}
+                        SET name = %s, email = %s, department = %s, subject = %s, semester = %s, year = %s
+                        WHERE id = %s
+                        """,
+                        [name, email, department, subject, semester, year, student_id]
+                    )
+                data["data"] = "Update Successful"
+            else:
+                data["data"] = "Invalid data for update"
+        
+        if request.POST.get("action") == "delete":
+            student_id = request.POST.get('userId')
+            if student_id:
+                with connection.cursor() as cursor:
+                    cursor.execute(
+                        f"DELETE FROM {table} WHERE id = %s", [student_id]
+                    )
+                data["data"] = "Delete Successful"
+            else:
+                data["data"] = "No ID provided for deletion"
+    return render(request,'edit_details/student.html',data)
 
 

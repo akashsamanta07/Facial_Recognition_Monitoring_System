@@ -9,15 +9,39 @@ header{
 body{
     background-color: rgb(74, 180, 233);
 }
+
 .full button{
     width: 50%;
     font-weight: 600;
+}
+.edit-teacher{
+    width: 100% !important;
+   color: white;
+    font-weight: 600;
+}
+.title_1{
+    font-weight: 700;
+}
+.edit-t{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.edit-teacher button{
+    background-color: blueviolet;
 }
 a{
     text-decoration: none;
     font-weight: 500;
 }
-
+.update-form{
+    background-color: white;
+    width:40vw;
+    padding: 2rem;
+    margin: 2rem auto;
+    border-radius: 10px;
+    font-weight: 700;
+}
 @media (max-width:575px){
     header h2{
         font-size: 1.2rem;
@@ -28,4 +52,11 @@ a{
     footer p{
         font-size: 0.8rem !important;
     }
+    .edit-t{
+        display: block;
+    }
+    .edit-teacher{
+        width: 50% !important;
+        margin-top: 0.6rem;
+     }
 }

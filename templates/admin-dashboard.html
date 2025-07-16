@@ -15,7 +15,12 @@
             <div class="container mt-5">
                 <div class="row flex-direction-coiumn justify-content-center full">
                     <div class="text-center mb-3">
-                        <button type="button" class="btn btn-primary btn-block shadow-lg" data-bs-toggle="modal" data-bs-target="#modeladd1">Add Teacher</button>
+                        <div class="edit-t">
+                            <button type="button" class="btn btn-primary btn-block shadow-lg edit-teacher" data-bs-toggle="modal" data-bs-target="#modeladd1">Add Teacher</button>
+                            <a href="{% url 'update_teacher' %}" class="edit-teacher">
+                                <button type="button" class="btn btn-info btn-block shadow-lg edit-teacher">Edit Teacher Details</button>
+                            </a>
+                        </div>
                     </div>
                     <div class="text-center mb-3">
                         <a href=""><button type="button" class="btn btn-success btn-block shadow-lg">Check Attendance</button></a>
