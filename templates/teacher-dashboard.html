@@ -2,7 +2,6 @@
 
 {% block content %}
 
-
 <div class="container mt-2">
     <div class="s_dash_top-bar">
         <button class="btn btn-warning me-2 s_dash_btn" data-bs-toggle="modal" data-bs-target="#changepass">Change Pass</button>
@@ -33,7 +32,6 @@
     </div>
 </div>
 
-
 <!-- Modal -->
 <div class="modal fade" id="modeladd2">
     <div class="modal-dialog modal-dialog-centered">
@@ -43,59 +41,54 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data" id="addStudentForm">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="excelFile" class="form-label">Upload Excel File</label>
                     <input type="file" class="form-control" id="excelFile" name="excelFile" accept=".xlsx,.xls">
-                  </div>
-                  <h6 class="text-center">Manual Add</h6>
-                 <!-- ID -->
-                    <div class="mb-3">
-                        <label for="userId" class="form-label">ROLL NO</label>
-                        <input type="text" class="form-control" id="userId" name="userId">
-                    </div>
-
-                    <!-- Name -->
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name">
-                    </div>
-                    <div class="mb-3">
-                      <label for="email" class="form-label">Email Address</label>
-                      <input
+                </div>
+                <h6 class="text-center">Manual Add</h6>
+                <!-- ID -->
+                <div class="mb-3">
+                    <label for="userId" class="form-label">ROLL NO</label>
+                    <input type="text" class="form-control" id="userId" name="userId">
+                </div>
+                <!-- Name -->
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input
                         type="email"
                         class="form-control"
                         id="email"
                         name="email"
                         placeholder="default@example.com"
-                      >
-                  </div>
-                  
-                    <div class="mb-3">
-                        <label for="department" class="form-label">Department</label>
-                        <select class="form-control" id="department" name="department">
-                            <option value="" disabled selected>Select department</option>
-                            <option value="CSE">CSE</option>
-                            <option value="IT">IT</option>
-                            <option value="ECE">ECE</option>
-                            <option value="EE">EE</option>
-                            <option value="ME">ME</option>
-                            <option value="CE">CE</option>
-                        </select>
-                    </div>
-                    
-
-                    <!-- Subject -->
-                    <div class="mb-3">
-                        <label for="subject" class="form-label">Subject</label>
-                        <input type="text" class="form-control" id="subject" name="subject">
-                    </div>
-
-                    <!-- Semester -->
-                    <div class="mb-3">
-                        <label for="semester" class="form-label">Semester</label>
-                        <select class="form-select" id="semester" name="semester">
+                    >
+                </div>
+                <div class="mb-3">
+                    <label for="department" class="form-label">Department</label>
+                    <select class="form-control" id="department" name="department">
+                        <option value="" disabled selected>Select department</option>
+                        <option value="CSE">CSE</option>
+                        <option value="IT">IT</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EE">EE</option>
+                        <option value="ME">ME</option>
+                        <option value="CE">CE</option>
+                    </select>
+                </div>
+                <!-- Subject -->
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="subject" name="subject">
+                </div>
+                <!-- Semester -->
+                <div class="mb-3">
+                    <label for="semester" class="form-label">Semester</label>
+                    <select class="form-select" id="semester" name="semester">
                         <option value="">Select Semester</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -105,16 +98,15 @@
                         <option value="6">6</option>
                         <option value="7">7</option>
                         <option value="8">8</option>
-                        </select>
-                    </div>
-                    <!-- Year (Free numeric input) -->
-                    <div class="mb-3">
-                        <label for="year" class="form-label">Year</label>
-                        <input type="number" class="form-control" id="year" name="year" min="2025" max="2100" placeholder="e.g. 2025">
-                    </div>
-  
+                    </select>
+                </div>
+                <!-- Year (Free numeric input) -->
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year</label>
+                    <input type="number" class="form-control" id="year" name="year" min="2025" max="2100" placeholder="e.g. 2025">
+                </div>
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#message" id="openModal" name="action" value="add">Save changes</button>
+                    <button type="submit" class="btn btn-primary m-2" id="openModal" name="action" value="add">Save changes</button>
                 </div>
             </form>
         </div>
@@ -123,7 +115,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="message1">
+<div class="modal fade" id="message1" tabindex="-1">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body text-center">
@@ -131,10 +123,9 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
-
-  <div class="modal fade" id="changepass" tabindex="-1" role="dialog" aria-labelledby="changepassLabel" aria-hidden="true">
+<div class="modal fade" id="changepass" tabindex="-1" role="dialog" aria-labelledby="changepassLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         
@@ -172,13 +163,36 @@
   
       </div>
     </div>
-  </div>
-  
+</div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
+<script>
+  // Analysis: The modal with id 'message1' is always shown on page load, regardless of whether there is a message.
+  // This causes the modal to show even after the first save, but not again if the page is not reloaded or if the message is not set.
+  // If the message is only set after a save, and not cleared, the modal may not show again on subsequent saves without a reload.
+  // Solution: Only show the modal if there is a message, and reset the modal state after closing.
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var message = "{{ message|default:'' }}";
+    if (message.trim() !== "") {
       var myModal = new bootstrap.Modal(document.getElementById('message1'));
       myModal.show();
-    });
-  </script>
+
+      // Optional: Clear the message after modal is closed, so it can show again on next save
+      var modalEl = document.getElementById('message1');
+      modalEl.addEventListener('hidden.bs.modal', function () {
+        // If you want to clear the message in the backend, you need to do it in the view.
+        // Here, you could reload the page or do nothing.
+      });
+    }
+  });
+
+  // Optional: Reset the form after successful submission to allow multiple saves
+  document.getElementById('addStudentForm')?.addEventListener('submit', function (e) {
+    // Let the form submit normally, but after submission, reset the form if needed
+    // This is only for client-side UX; actual logic should be handled in the backend
+    setTimeout(() => {
+      this.reset();
+    }, 1000);
+  });
+</script>
 {% endblock %}

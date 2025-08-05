@@ -2,34 +2,65 @@
 
 {% block content %}
 <div class="m-5">
-{% if data == 'Not Found' or data == '' %}
-    <p class="massage" style="color: red;
-    text-align: center;
-    font-weight: 700;
-    margin-top: 10px;">{{data}}</p>
-    <form method="POST" action="" class="w-50 mx-auto border p-4 shadow mt-5">
-    {% csrf_token %}
-    <div class="mb-3">
-      <label for="user_id" class="form-label title_1">User Id</label>
-      <input type="text" class="form-control" id="user_id" name="user_id" required>
-    </div>
-    <input type="hidden" name="action" value="id">
-    <button type="submit" class="btn btn-primary">Search</button>
-  </form>
+    {% if data == "" %}
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle shadow-sm rounded bg-white">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col" class="text-center">ID</th>
+                        <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center">Email</th>
+                        <th scope="col" class="text-center">Department</th>
+                        <th scope="col" class="text-center">Subject</th>
+                        <th scope="col" class="text-center">Semester</th>
+                        <th scope="col" class="text-center">Year</th>
+                        <th scope="col" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if all_teachers %}
+                        {% for teacher in all_teachers %}
+                            <tr>
+                                <td class="text-center fw-semibold">{{ teacher.0 }}</td>
+                                <td class="text-center">{{ teacher.1 }}</td>
+                                <td class="text-center">{{ teacher.2 }}</td>
+                                <td class="text-center">{{ teacher.3 }}</td>
+                                <td class="text-center">{{ teacher.4 }}</td>
+                                <td class="text-center">{{ teacher.5 }}</td>
+                                <td class="text-center">{{ teacher.6 }}</td>
+                                <td class="text-center">
+                                    <form method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="user_id" value="{{ teacher.0 }}">
+                                        <button class="btn btn-primary btn-sm rounded" type="submit" name="action" value="id">Edit</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                <i class="bi bi-exclamation-circle fs-4 me-2"></i>
+                                No teacher data available.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
 {% elif data == "Found" %}
 <div class="update-form">
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
         <div class="mb-3">
             <label for="userId" class="form-label">ID</label>
-            <input type="text" class="form-control" id="userId" name="userId" value=
-            {{id}}>
+            <input type="text" class="form-control" id="userId" name="userId" value="{{ id }}">
         </div>
 
         <!-- Name -->
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value={{name}}>
+            <input type="text" class="form-control" id="name" name="name" value="{{ name }}">
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email Address</label>
@@ -38,13 +69,13 @@
             class="form-control"
             id="email"
             name="email"
-            value={{email}}
+            value="{{ email }}"
           >
         </div>
         <div class="mb-3">
             <label for="department" class="form-label">Department</label>
-            <select class="form-control" id="department" name="department" value={{department}}>
-                <option value={{department}} >{{department}}</option>
+            <select class="form-control" id="department" name="department">
+                <option value="{{ department }}">{{ department }}</option>
                 <option value="CSE">CSE</option>
                 <option value="IT">IT</option>
                 <option value="ECE">ECE</option>
@@ -57,14 +88,14 @@
         <!-- Subject -->
         <div class="mb-3">
             <label for="subject" class="form-label">Subject</label>
-            <input type="text" class="form-control" id="subject" name="subject" value={{subject}}>
+            <input type="text" class="form-control" id="subject" name="subject" value="{{ subject }}">
         </div>
 
         <!-- Semester -->
         <div class="mb-3">
             <label for="semester" class="form-label">Semester</label>
             <select class="form-select" id="semester" name="semester">
-            <option value={{semester}}>{{semester}}</option>
+            <option value="{{ semester }}">{{ semester }}</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -78,7 +109,7 @@
         <!-- Year (Free numeric input) -->
         <div class="mb-3">
             <label for="year" class="form-label">Year</label>
-            <input type="number" class="form-control" id="year" name="year" min="2025" max="2100" value={{year}}>
+            <input type="number" class="form-control" id="year" name="year" min="2025" max="2100" value="{{ year }}">
         </div>
 
     <div class="d-flex justify-content-end">

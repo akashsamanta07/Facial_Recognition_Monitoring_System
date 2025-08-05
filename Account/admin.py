@@ -1,15 +1,15 @@
 from django.contrib import admin
 from Account.models import LoginAdmin, LoginTeacher, LoginStudent
 
-class Admin(admin.ModelAdmin):
-    list_display = ("user_id","user_name", "password","department","year")
-admin.site.register(LoginAdmin, Admin)
+@admin.register(LoginAdmin)
+class LoginAdminAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in LoginAdmin._meta.fields]
 
-class Teacher(admin.ModelAdmin):
-    list_display = ("user_id","user_name", "password","department","year")
-admin.site.register(LoginTeacher, Teacher)
+@admin.register(LoginTeacher)
+class LoginTeacherAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in LoginTeacher._meta.fields]
 
-class Student(admin.ModelAdmin):
-    list_display = ("user_id","user_name", "password","department","year")
-admin.site.register(LoginStudent, Student)
+@admin.register(LoginStudent)
+class LoginStudentAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in LoginStudent._meta.fields]
 
