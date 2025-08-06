@@ -13,6 +13,8 @@ from django.core.mail import send_mail
 import os
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+import cv2
+import mediapipe as mp
 
 def home(request):
     return render(request, "index.html")
@@ -217,6 +219,8 @@ def admin_dashboard(request):
                 message = "An error occurred while changing password"
     return render(request, "admin-dashboard.html", {"username": username, "message": message})
 
+
+
 @never_cache
 def teacher_dashboard(request):
     if 'user_id' not in request.session:
@@ -325,6 +329,65 @@ def teacher_dashboard(request):
                 message = "An error occurred while changing password"
     return render(request, "teacher-dashboard.html", {"username": username, "message": message})
 
+
+def process_face_image(input_image_path):
+    size = (200, 200)
+    img_path = os.path.join(settings.MEDIA_ROOT, input_image_path)
+    if not os.path.exists(img_path):
+        return None
+    img = cv2.imread(img_path)
+    if img is None:
+        return None
+    mp_face_detection = mp.solutions.face_detection
+    with mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.6) as face_detection:
+        rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        results = face_detection.process(rgb_img)
+        if results.detections:
+            detection = results.detections[0]
+            bboxC = detection.location_data.relative_bounding_box
+            ih, iw, _ = img.shape
+            x, y, w, h = (int(bboxC.xmin * iw), int(bboxC.ymin * ih),
+                          int(bboxC.width * iw), int(bboxC.height * ih))
+            # Ensure coordinates are within image bounds
+            x, y = max(0, x), max(0, y)
+            w, h = max(1, w), max(1, h)
+            if x + w > iw:
+                w = iw - x
+            if y + h > ih:
+                h = ih - y
+            # Crop face
+            face_img = img[y:y+h, x:x+w]
+            if face_img.size == 0:
+                return None
+            # Resize and save
+            face_img_resized = cv2.resize(face_img, size)
+            # Save with same name and extension as input
+            save_path = os.path.join("dataset",input_image_path)
+            full_save_path = os.path.join(settings.MEDIA_ROOT, save_path)
+            # Remove previous file if exists
+            if default_storage.exists(save_path):
+                default_storage.delete(save_path)
+            for old_ext in [".jpg", ".png", ".jpeg"]:
+                ext = os.path.splitext(save_path)[0]
+                old_path=ext+old_ext;
+                if default_storage.exists(old_path) and old_path != save_path:
+                    default_storage.delete(old_path)
+            # Determine extension for encoding
+            ext = os.path.splitext(save_path)[1].lower()
+            if ext =='.jpg':
+                encode_ext = '.jpg'
+            elif ext == '.png':
+                encode_ext = '.png'
+            elif ext=='.jpeg':
+                encode_ext = '.jpeg'
+            # Encode image to bytes
+            success, buffer = cv2.imencode(encode_ext, face_img_resized)
+            if not success:
+                return None
+            default_storage.save(save_path, ContentFile(buffer.tobytes()))
+            return save_path
+    return None
+
 @never_cache
 def student_dashboard(request):
     if 'user_id' not in request.session:
@@ -376,6 +439,7 @@ def student_dashboard(request):
                                 default_storage.delete(prev_file_path)
                     # Save the new file
                     path = default_storage.save(file_path, ContentFile(profile_pic.read()))
+                    process_face_image(file_path)
                     # Update the database with the new profile picture path
                     with connection.cursor() as cursor:
                         cursor.execute(
