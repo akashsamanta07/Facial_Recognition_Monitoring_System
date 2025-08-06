@@ -493,22 +493,38 @@ def admin_forget(request):
 def update_teacher(request):
     data = {
         "data": '',
+        "department":"department",
+        "semester":"semester",
+        "year":"year",
     }
     table = "table_" + str(request.session.get('user_id'))
-    # acess all data from database
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute(
-                f"""
-                SELECT id, name, email, department, subject, semester, year
-                FROM {table}
-                """
-            )
-            all_teachers = cursor.fetchall()
-            data["all_teachers"] = all_teachers
-    except Exception as e:
-        data["all_teachers"] = []
     if request.method == 'POST':
+        if request.POST.get("action") == "filter":
+            try:
+                # Validate table name to prevent SQL injection
+                if not table.isidentifier():
+                    data["all_teachers"] = []
+                else:
+                    subject = request.POST.get('subject')
+                    department = request.POST.get('department')
+                    semester = request.POST.get('semester')
+                    year = request.POST.get('year')
+                    with connection.cursor() as cursor:
+                        query = f"""
+                            SELECT id, name, email, department, subject, semester, year
+                            FROM `{table}`
+                            WHERE subject = %s AND department = %s AND semester = %s AND year = %s
+                        """
+                        cursor.execute(query, [subject, department, semester, year])
+                        all_teachers = cursor.fetchall()
+                        data["all_teachers"] = all_teachers
+            except Exception:
+                data["all_teachers"] = []
+            data["department"] = request.POST.get('department')
+            data["subject"] = request.POST.get('subject')
+            data["semester"] = request.POST.get('semester')
+            data["year"] = request.POST.get('year')
+                
         if request.POST.get("action") == "id":
             try:
                 teacher_id = request.POST.get('user_id')
@@ -575,21 +591,37 @@ def update_teacher(request):
 def update_student(request):
     data = {
         "data": '',
+        "department":"department",
+        "semester":"semester",
+        "year":"year",
     }
     table = "table_" + str(request.session.get('user_id'))
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute(
-                f"""
-                SELECT id, name, email, department, subject, semester, year
-                FROM {table}
-                """
-            )
-            all_students = cursor.fetchall()
-            data["all_students"] = all_students
-    except Exception as e:
-        data["all_teachers"] = []
     if request.method == 'POST':
+        if request.POST.get("action") == "filter":
+            try:
+                # Validate table name to prevent SQL injection
+                if not table.isidentifier():
+                    data["all_teachers"] = []
+                else:
+                    subject = request.POST.get('subject')
+                    department = request.POST.get('department')
+                    semester = request.POST.get('semester')
+                    year = request.POST.get('year')
+                    with connection.cursor() as cursor:
+                        query = f"""
+                            SELECT id, name, email, department, subject, semester, year
+                            FROM `{table}`
+                            WHERE subject = %s AND department = %s AND semester = %s AND year = %s
+                        """
+                        cursor.execute(query, [subject, department, semester, year])
+                        all_students = cursor.fetchall()
+                        data["all_students"] = all_students
+            except Exception:
+                data["all_students"] = []
+            data["department"] = request.POST.get('department')
+            data["subject"] = request.POST.get('subject')
+            data["semester"] = request.POST.get('semester')
+            data["year"] = request.POST.get('year')
         if request.POST.get("action") == "id":
             try:
                 student_id = request.POST.get('user_id')

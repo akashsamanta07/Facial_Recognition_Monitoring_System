@@ -3,6 +3,50 @@
 {% block content %}
 <div class="m-5">
     {% if data == "" %}
+        <form method="post" class="mb-4">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="subject" class="form-label fw-bold ms-2">Subject</label>
+                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject" value="{{ subject }}" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="department" class="form-label fw-bold ms-2">Department</label>
+                    <select class="form-select" id="department" name="department" required>
+                        <option value="{{ department }}">{{ department }}</option>
+                        <option value="CSE">CSE</option>
+                        <option value="IT">IT</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EE">EE</option>
+                        <option value="ME">ME</option>
+                        <option value="CE">CE</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="semester" class="form-label fw-bold ms-2">Semester</label>
+                    <select class="form-select" id="semester" name="semester" required>
+                        <option value="{{ semester }}" >{{ semester }}</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="year" class="form-label fw-bold ms-2">Year</label>
+                    <input type="number" class="form-control" id="year" name="year" min="2025" max="2100" placeholder="Enter Year" value="{{ year }}" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success" name="action" value="filter">Filter</button>
+                </div>
+            </div>
+        </form>
         <div class="table-responsive">
             <table class="table table-hover table-bordered align-middle shadow-sm rounded bg-white">
                 <thead class="table-primary">
